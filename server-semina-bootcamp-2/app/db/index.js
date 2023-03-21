@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { urlDb } = require('../utils/config');
+const { urlDb } = require('../config');
 
 mongoose.connect(urlDb);
 
