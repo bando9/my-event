@@ -1,5 +1,5 @@
 const express = require('express').Router;
-// const { create } = require('./controller');
+const { create } = require('./controller');
 
 const router = express();
 
@@ -20,6 +20,6 @@ router.get('/categories', (req, res) => {
     });
 });
 
-// router.post('/categories', create);
+router.post('/categories', create);
 
 module.exports = router;
