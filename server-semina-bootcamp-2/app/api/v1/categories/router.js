@@ -1,24 +1,9 @@
 const express = require('express').Router;
-const { create } = require('./controller');
+const { create, index } = require('./controller');
 
 const router = express();
 
-router.get('/categories', (req, res) => {
-    const data = [
-        {
-            _id: 1,
-            name: 'seminar',
-        },
-        {
-            _id: 2,
-            name: 'MERN'
-        },
-    ]
-    
-    res.status(200).json({
-        data,
-    });
-});
+router.get('/categories', index)
 
 router.post('/categories', create);
 
