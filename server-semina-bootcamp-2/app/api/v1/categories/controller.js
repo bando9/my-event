@@ -35,15 +35,25 @@ const update = async (req, res, next) => {
         const { id } = req.params;
         const { name } = req.body;
         
-        // Cara 3
-        const result = await Categories.findOne({ _id: id });
+        // Cara 1
+        // const result = await Categories.findOne({ _id: id });
         
-        if (!result) {
-            return res.status(404).json({ message: 'Id categories tidak dimukan' });
-        }
+        // if (!result) {
+        //     return res.status(404).json({ message: 'Id categories tidak dimukan' });
+        // }
 
-        result.name = name;
-        result.save();
+        // result.name = name;
+        // result.save();
+
+        // Cara 2
+        const result = await Categories.findOneAndUpdate(
+            {
+                _id: id,
+            },
+            { name },
+            { new: true, runValidators: true }
+        );
+
         res.status(200).json({
             data: result,
         })
@@ -51,6 +61,20 @@ const update = async (req, res, next) => {
         
     } catch(err) {
         next(err);
+    }
+}
+
+const destroy = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const result = await Categories.findByIdAndRemove(id);
+
+        res.status(200).json({
+            data: result,
+        });
+    } catch (err) {
+        next(err)
     }
 }
 
@@ -68,6 +92,7 @@ const index = async(req, res, next) => {
 module.exports = {
     index,
     update,
+    destroy,
     find,
     create,
 }
