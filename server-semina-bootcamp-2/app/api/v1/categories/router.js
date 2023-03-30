@@ -9,6 +9,6 @@ router.post('/categories', create);
 
 router.get('/categories/:id', find);
 
-router.put('/categories/:id', update);
+// router.put('/categories/:id', update);
 
 module.exports = router;
