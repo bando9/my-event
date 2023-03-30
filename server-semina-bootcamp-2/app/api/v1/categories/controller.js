@@ -12,22 +12,6 @@ const create = async (req, res, next) => {
     }
 };
 
-// const find = async (req, res, next) => {
-//     try{
-//         const { id } = req.params;
-//         const result = await Categories.findOne({ _id: id });
-
-//         if (!result){
-//             return res.status(404).json({message: 'Id categories tidak ditemukan'})
-//         }
-            
-//         res.status(200).json({
-//             data: result,
-//         })
-//     } catch(err) {
-//         next(err);
-//     }
-// };
 const find = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -46,37 +30,29 @@ const find = async (req, res, next) => {
     }
 }
 
-// const update = async (req, res, next) => {
-//     try {
-//         const { id } = req.params;
-//         const { name } = req.body;
+const update = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { name } = req.body;
+        
+        // Cara 3
+        const result = await Categories.findOne({ _id: id });
+        
+        if (!result) {
+            return res.status(404).json({ message: 'Id categories tidak dimukan' });
+        }
 
-//         // Cara 1
-//         // const checkingCategories = await Categories.findOne({ _id: id });
-
-//         // if (!checkingCategories) {
-//         //     return res.status(404).json({
-//         //         message: 'Id categories tidak ditemukan'
-//         //     })
-//         // };
-
-//         // checkingCategories.name = name;
-//         // await checkingCategories.save();
-
-//         // Cara 2
-//         const result = await Categories.findByIdAndUpdate(
-//             { _id: id },
-//             { name },
-//             { new: id, runValidators: true }
-//         )
-
-//         res.status(200).json({
-//             data: checkingCategories,
-//         })
-//     } catch(err) {
-//         next(err);
-//     }
-// }
+        result.name = name;
+        result.save();
+        res.status(200).json({
+            data: result,
+        })
+        
+        
+    } catch(err) {
+        next(err);
+    }
+}
 
 const index = async(req, res, next) => {
     try {
@@ -91,7 +67,7 @@ const index = async(req, res, next) => {
 
 module.exports = {
     index,
-    // update,
+    update,
     find,
     create,
 }
